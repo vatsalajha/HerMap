@@ -58,73 +58,245 @@
     <div id="map"></div>
 
     <script>
-        // This data would ideally come from your backend
+        // Data from backend
         const washroomLocations = [
             {
                 id: 1,
-                name: "Alexander Library - First Floor",
-                location: { lat: 40.50500, lng: -74.45217 },
-                status: {
-                    pads: "available",
-                    tampons: "low",
-                    lastUpdated: "10 minutes ago"
-                },
-                details0: {
-                    floor: "Basement",
-                    accessibility: false,
-                    vendingMachine: true
-                },
-                details1: {
-                    floor: "1st Floor",
-                    accessibility: true,
-                    vendingMachine: true
-                },
-                details2: {
-                    floor: "2nd Floor",
-                    accessibility: true,
-                    vendingMachine: true
-                },
-                details3: {
-                    floor: "3rd Floor",
-                    accessibility: true,
-                    vendingMachine: true
-                }
+                name: "Alexander Library",
+                location: { lat: 40.50532709246307, lng: -74.4524606031269 },
+                floors: [
+                    {
+                        level: "Basement",
+                        accessibility: true,
+                        vendingMachine: true,
+                        waterFilter: true,
+                        status: {
+                            pads: "available",
+                            tampons: "low",
+                            lastUpdated: "5 minutes ago"
+                        }
+                    },
+                    {
+                        level: "1st Floor",
+                        accessibility: false,
+                        vendingMachine: true,
+                        waterFilter: true,
+                        status: {
+                            pads: "empty",
+                            tampons: "available",
+                            lastUpdated: "10 minutes ago"
+                        }
+                    },
+                    {
+                        level: "2nd Floor",
+                        accessibility: true,
+                        vendingMachine: true,
+                        waterFilter: false,
+                        status: {
+                        pads: "low",
+                        tampons: "low",
+                        lastUpdated: "15 minutes ago"
+                        }
+                    },
+                    {
+                        level: "2nd Floor",
+                        accessibility: true,
+                        vendingMachine: true,
+                        waterFilter: false,
+                        status: {
+                        pads: "low",
+                        tampons: "low",
+                        lastUpdated: "15 minutes ago"
+                        }
+                    }
+                ]
             },
             {
                 id: 2,
                 name: "Art Library",
-                location: { lat: 40.49988, lng: -74.44620 },
-                status: {
-                    pads: "unavailable",
-                    tampons: "available",
-                    lastUpdated: "1 hour ago"
-                },
-                details1: {
-                    floor: "Lower Level",
-                    accessibility: true,
-                    vendingMachine: true
-                },
-                details2: {
-                    floor: "Main Level",
-                    accessibility: true,
-                    vendingMachine: true
-                }
+                location: { lat: 40.500187002141885, lng: -74.44628593381235 },
+                floors: [
+                    {
+                        level: "Lower Level",
+                        accessibility: true,
+                        vendingMachine: true,
+                        waterFilter: true,
+                        status: {
+                            pads: "unavailable",
+                            tampons: "low",
+                            lastUpdated: "5 minutes ago"
+                        }
+                    },
+                    {
+                        level: "Main Level",
+                        accessibility: true,
+                        vendingMachine: true,
+                        waterFilter: true,
+                        status: {
+                        pads: "low",
+                        tampons: "available",
+                        lastUpdated: "20 minutes ago"
+                        }
+                    }
+                ]
             },
             {
                 id: 3,
                 name: "Carr Library",
-                location: { lat: 40.52264, lng: -74.43743 },
-                status: {
-                    pads: "unavailable",
-                    tampons: "available",
-                    lastUpdated: "1 hour ago"
-                },
-                details: {
-                    floor: "Ground Floor",
-                    accessibility: true,
-                    vendingMachine: true
-                }
-            }
+                location: { lat: 40.52273088150865, lng: -74.43745974730435 },
+                floors: [
+                    {
+                        level: "Lower Level",
+                        accessibility: false,
+                        vendingMachine: true,
+                        waterFilter: true,
+                        status: {
+                            pads: "unavailable",
+                            tampons: "low",
+                            lastUpdated: "5 minutes ago"
+                        }
+                    },
+                    {
+                        level: "Main Level",
+                        accessibility: true,
+                        vendingMachine: true,
+                        waterFilter: true,
+                        status: {
+                        pads: "low",
+                        tampons: "available",
+                        lastUpdated: "20 minutes ago"
+                        }
+                    },
+                    {
+                        level: "Upper Level",
+                        accessibility: true,
+                        vendingMachine: true,
+                        waterFilter: true,
+                        status: {
+                        pads: "low",
+                        tampons: "available",
+                        lastUpdated: "20 minutes ago"
+                        }
+                    }
+                ]
+            },
+            {
+                id: 4,
+                name: "Chang Library",
+                location: { lat: 40.48037326005612, lng: -74.43538783196364 },
+                floors: [
+                    {
+                        level: "Lower Level",
+                        accessibility: false,
+                        vendingMachine: true,
+                        waterFilter: false,
+                        status: {
+                            pads: "unavailable",
+                            tampons: "unavailable",
+                            lastUpdated: "1 hour ago"
+                        }
+                    }
+                ]
+            },
+            {
+                id: 5,
+                name: "Douglass Library",
+                location: { lat: 40.486128550530104, lng: -74.43584139333396 },
+                floors: [
+                    {
+                        level: "Lower Level",
+                        accessibility: false,
+                        vendingMachine: true,
+                        waterFilter: false,
+                        status: {
+                            pads: "available",
+                            tampons: "available",
+                            lastUpdated: "1 hour ago"
+                        }
+                    },
+                    {
+                        level: "Basement Level",
+                        accessibility: false,
+                        vendingMachine: true,
+                        waterFilter: false,
+                        status: {
+                            pads: "available",
+                            tampons: "available",
+                            lastUpdated: "10 hour ago"
+                        }
+                    },
+                    {
+                        level: "First Level",
+                        accessibility: true,
+                        vendingMachine: true,
+                        waterFilter: true,
+                        status: {
+                            pads: "available",
+                            tampons: "available",
+                            lastUpdated: "1 hour ago"
+                        }
+                    }
+                ]
+            },
+            {
+                id: 6,
+                name: "Library of Science and Medicine",
+                location: { lat: 40.48037326005612, lng: -74.43538783196364 },
+
+                floors: [
+                    {
+                        level: "First Floor",
+                        accessibility: true,
+                        vendingMachine: true,
+                        waterFilter: false,
+                        status: {
+                            pads: "available",
+                            tampons: "low",
+                            lastUpdated: "18 hour ago"
+                        }
+                    },
+                    {
+                        level: "Second Floor",
+                        accessibility: true,
+                        vendingMachine: true,
+                        waterFilter: false,
+                        status: {
+                            pads: "available",
+                            tampons: "available",
+                            lastUpdated: "1 hour ago"
+                        }
+                    },
+                    {
+                        level: "Third Floor",
+                        accessibility: false,
+                        vendingMachine: true,
+                        waterFilter: true,
+                        status: {
+                            pads: "available",
+                            tampons: "available",
+                            lastUpdated: "15 minutes ago"
+                        }
+                    }
+                ]               
+            }, 
+            {
+                id: 7,
+                name: "Busch Student Center",
+                location: { lat: 40.52393159933594, lng: -74.45624362129561 },
+                floors: [
+                    {
+                        level: "Lower Level",
+                        accessibility: true,
+                        vendingMachine: true,
+                        waterFilter: true,
+                        status: {
+                            pads: "unavailable",
+                            tampons: "low",
+                            lastUpdated: "1 hour ago"
+                        }
+                    }
+                ]  
+            }, 
             // Add more locations as needed
         ];
 
@@ -160,6 +332,7 @@
 
                 // Add click listener to show info window
                 marker.addListener('click', () => {
+                    console.log('Marker clicked:', washroom.name);
                     const content = createInfoWindowContent(washroom);
                     infoWindow.setContent(content);
                     infoWindow.open(map, marker);
@@ -171,30 +344,81 @@
         }
 
         function createInfoWindowContent(washroom) {
-            return `
+            // First, let's create a header for the building
+            let content = `
                 <div class="washroom-info">
-                    <h3>${washroom.name}</h3>
-                    <div class="status-indicator">
-                        <span class="status-dot status-${washroom.status.pads}"></span>
-                        Pads: ${washroom.status.pads}
-                    </div>
-                    <div class="status-indicator">
-                        <span class="status-dot status-${washroom.status.tampons}"></span>
-                        Tampons: ${washroom.status.tampons}
-                    </div>
-                    <div class="details">
-                        <p>Floor: ${washroom.details.floor}</p>
-                        <p>Accessibility: ${washroom.details.accessibility ? '♿ Accessible' : 'Not accessible'}</p>
-                        <p>Vending Machine: ${washroom.details.vendingMachine ? '✓ Available' : '✗ Not available'}</p>
-                    </div>
-                    <div class="last-updated">
-                        Last updated: ${washroom.status.lastUpdated}
-                    </div>
-                    <button class="report-button" onclick="reportStatus(${washroom.id})">
-                        Report Status
-                    </button>
-                </div>
+                    <h3 style="margin-bottom: 15px; color: #1a365d;">${washroom.name}</h3>
             `;
+
+            // Then, create sections for each floor
+            washroom.floors.forEach(floor => {
+                content += `
+                    <div style="margin-bottom: 20px; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        <h4 style="color: #2d3748; margin-bottom: 10px;">${floor.level}</h4>
+                        
+                        <!-- Status Indicators -->
+                        <div style="display: flex; gap: 15px; margin-bottom: 10px;">
+                            <div class="status-indicator">
+                                <span class="status-dot" style="
+                                    display: inline-block;
+                                    width: 10px;
+                                    height: 10px;
+                                    border-radius: 50%;
+                                    margin-right: 8px;
+                                    background-color: ${
+                                        floor.status.pads === 'available' ? '#22c55e' :
+                                        floor.status.pads === 'low' ? '#f59e0b' : '#dc2626'
+                                    };">
+                                </span>
+                                Pads: ${floor.status.pads}
+                            </div>
+                            <div class="status-indicator">
+                                <span class="status-dot" style="
+                                    display: inline-block;
+                                    width: 10px;
+                                    height: 10px;
+                                    border-radius: 50%;
+                                    margin-right: 8px;
+                                    background-color: ${
+                                        floor.status.tampons === 'available' ? '#22c55e' :
+                                        floor.status.tampons === 'low' ? '#f59e0b' : '#dc2626'
+                                    };">
+                                </span>
+                                Tampons: ${floor.status.tampons}
+                            </div>
+                        </div>
+
+                        <!-- Facilities -->
+                        <div style="font-size: 14px; margin-bottom: 10px;">
+                            <div>${floor.accessibility ? '♿ Accessible' : '⚠️ Not accessible'}</div>
+                            <div>${floor.vendingMachine ? '🏧 Vending machine available' : '❌ No vending machine'}</div>
+                            <div>${floor.waterFilter ? '💧 Water filter available' : '❌ No water filter'}</div>
+                        </div>
+
+                        <!-- Last Updated -->
+                        <div style="font-size: 12px; color: #666; margin-bottom: 10px;">
+                            Last updated: ${floor.status.lastUpdated}
+                        </div>
+
+                        <!-- Report Button -->
+                        <button 
+                            onclick="reportStatus('${washroom.id}', '${floor.level}')"
+                            style="
+                                background-color: #3b82f6;
+                                color: white;
+                                border: none;
+                                padding: 8px 12px;
+                                border-radius: 4px;
+                                cursor: pointer;
+                                font-size: 14px;">
+                            Update Status
+                        </button>
+                    </div>
+                `;
+            });
+
+            content += '</div>';
+            return content;
         }
 
         function addCustomControls(map) {
@@ -202,9 +426,10 @@
             // For example, filters for accessibility, vending machines, etc.
         }
 
-        function reportStatus(washroomId) {
-            // Implement status reporting functionality
-            console.log(`Reporting status for washroom ${washroomId}`);
+        function reportStatus(washroomId, floorLevel) {
+            console.log(`Reporting status for washroom ${washroomId}, floor ${floorLevel}`);
+            alert(`Status reporting will be implemented for ${floorLevel}`);
+            // Here we'll implement the status reporting functionality
         }
     </script>
     <script async defer
