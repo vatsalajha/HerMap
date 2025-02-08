@@ -59,336 +59,354 @@
 
     <script>
         // Data from backend
-        const washroomLocations = [
-            {
-                id: 1,
-                name: "Alexander Library",
-                location: { lat: 40.50532709246307, lng: -74.4524606031269 },
-                floors: [
-                    {
-                        level: "Basement",
-                        accessibility: true,
-                        vendingMachine: true,
-                        status: {
-                            pads: "available",
-                            tampons: "low",
-                            lastUpdated: "5 minutes ago",
-                            waterFilter: "Working"
-                        }
-                    },
-                    {
-                        level: "1st Floor",
-                        accessibility: false,
-                        vendingMachine: true,
-                        status: {
-                            pads: "empty",
-                            tampons: "available",
-                            lastUpdated: "10 minutes ago",
-                            waterFilter: "Working"
-                        }
-                    },
-                    {
-                        level: "2nd Floor",
-                        accessibility: true,
-                        vendingMachine: true,
-                        status: {
-                            pads: "low",
-                            tampons: "low",
-                            lastUpdated: "15 minutes ago",
-                            waterFilter: "Working"
-                        }
-                    },
-                    {
-                        level: "2nd Floor",
-                        accessibility: true,
-                        vendingMachine: true,
-                        status: {
-                            pads: "low",
-                            tampons: "low",
-                            lastUpdated: "15 minutes ago",
-                            waterFilter: "Working"
-                        }
-                    }
-                ]
-            },
-            {
-                id: 2,
-                name: "Art Library",
-                location: { lat: 40.500187002141885, lng: -74.44628593381235 },
-                floors: [
-                    {
-                        level: "Lower Level",
-                        accessibility: true,
-                        vendingMachine: true,
-                        status: {
-                            pads: "unavailable",
-                            tampons: "low",
-                            lastUpdated: "5 minutes ago",
-                            waterFilter: "Working"
-                        }
-                    },
-                    {
-                        level: "Main Level",
-                        accessibility: true,
-                        vendingMachine: true,
-                        status: {
-                            pads: "low",
-                            tampons: "available",
-                            lastUpdated: "20 minutes ago",
-                            waterFilter: "Working",
-                        }
-                    }
-                ]
-            },
-            {
-                id: 3,
-                name: "Carr Library",
-                location: { lat: 40.52273088150865, lng: -74.43745974730435 },
-                floors: [
-                    {
-                        level: "Lower Level",
-                        accessibility: false,
-                        vendingMachine: true,
-                        status: {
-                            pads: "unavailable",
-                            tampons: "low",
-                            lastUpdated: "5 minutes ago",
-                            waterFilter: "Working"
-                        }
-                    },
-                    {
-                        level: "Main Level",
-                        accessibility: true,
-                        vendingMachine: true,
-                        status: {
-                            pads: "low",
-                            tampons: "available",
-                            lastUpdated: "20 minutes ago",
-                            waterFilter: "Working"
-                        }
-                    },
-                    {
-                        level: "Upper Level",
-                        accessibility: true,
-                        vendingMachine: true,
-                        status: {
-                            pads: "low",
-                            tampons: "available",
-                            lastUpdated: "20 minutes ago",
-                            waterFilter: "Working"
-                        }
-                    }
-                ]
-            },
-            {
-                id: 4,
-                name: "Chang Library",
-                location: { lat: 40.48037326005612, lng: -74.43538783196364 },
-                floors: [
-                    {
-                        level: "Lower Level",
-                        accessibility: false,
-                        vendingMachine: true,
-                        status: {
-                            pads: "unavailable",
-                            tampons: "unavailable",
-                            lastUpdated: "1 hour ago",
-                            waterFilter: "Working"
-                        }
-                    }
-                ]
-            },
-            {
-                id: 5,
-                name: "Douglass Library",
-                location: { lat: 40.486128550530104, lng: -74.43584139333396 },
-                floors: [
-                    {
-                        level: "Lower Level",
-                        accessibility: false,
-                        vendingMachine: true,
-                        status: {
-                            pads: "available",
-                            tampons: "available",
-                            lastUpdated: "1 hour ago",
-                            waterFilter: "Working"
-                        }
-                    },
-                    {
-                        level: "Basement Level",
-                        accessibility: false,
-                        vendingMachine: true,
-                        status: {
-                            pads: "available",
-                            tampons: "available",
-                            lastUpdated: "10 hour ago",
-                            waterFilter: "Working"
-                        }
-                    },
-                    {
-                        level: "First Level",
-                        accessibility: true,
-                        vendingMachine: true,
-                        status: {
-                            pads: "available",
-                            tampons: "available",
-                            lastUpdated: "1 hour ago",
-                            waterFilter: "Working"
-                        }
-                    }
-                ]
-            },
-            {
-                id: 6,
-                name: "Library of Science and Medicine",
-                location: { lat: 40.48037326005612, lng: -74.43538783196364 },
+        
+        // const washroomLocations = [
+        //     {
+        //         id: 1,
+        //         name: "Alexander Library",
+        //         location: { lat: 40.50532709246307, lng: -74.4524606031269 },
+        //         floors: [
+        //             {
+        //                 level: "Basement",
+        //                 accessibility: true,
+        //                 vendingMachine: true,
+        //                 status: {
+        //                     pads: "available",
+        //                     tampons: "low",
+        //                     lastUpdated: "5 minutes ago",
+                    //         waterFilter: "Working"
+                    //     }
+                    // },
+                    // {
+                    //     level: "1st Floor",
+                    //     accessibility: false,
+                    //     vendingMachine: true,
+                    //     status: {
+                    //         pads: "empty",
+                    //         tampons: "available",
+                    //         lastUpdated: "10 minutes ago",
+                    //         waterFilter: "Working"
+                    //     }
+                    // },
+                    // {
+                    //     level: "2nd Floor",
+                    //     accessibility: true,
+                    //     vendingMachine: true,
+                    //     status: {
+                    //         pads: "low",
+                    //         tampons: "low",
+                    //         lastUpdated: "15 minutes ago",
+            //                 waterFilter: "Working"
+            //             }
+            //         },
+            //         {
+            //             level: "2nd Floor",
+            //             accessibility: true,
+            //             vendingMachine: true,
+            //             status: {
+            //                 pads: "low",
+            //                 tampons: "low",
+            //                 lastUpdated: "15 minutes ago",
+            //                 waterFilter: "Working"
+            //             }
+            //         }
+            //     ]
+            // },
+            // {
+            //     id: 2,
+            //     name: "Art Library",
+            //     location: { lat: 40.500187002141885, lng: -74.44628593381235 },
+                // floors: [
+                //     {
+                //         level: "Lower Level",
+                //         accessibility: true,
+                //         vendingMachine: true,
+                //         status: {
+                //             pads: "unavailable",
+                //             tampons: "low",
+                //             lastUpdated: "5 minutes ago",
+                //             waterFilter: "Working"
+                //         }
+                //     },
+                //     {
+                //         level: "Main Level",
+                //         accessibility: true,
+                //         vendingMachine: true,
+                //         status: {
+            //                 pads: "low",
+            //                 tampons: "available",
+            //                 lastUpdated: "20 minutes ago",
+            //                 waterFilter: "Working",
+            //             }
+            //         }
+            //     ]
+            // },
+            // {
+            //     id: 3,
+            //     name: "Carr Library",
+            //     location: { lat: 40.52273088150865, lng: -74.43745974730435 },
+            //     floors: [
+            //         {
+            //             level: "Lower Level",
+            //             accessibility: false,
+            //             vendingMachine: true,
+            //             status: {
+            //                 pads: "unavailable",
+            //                 tampons: "low",
+            //                 lastUpdated: "5 minutes ago",
+            //                 waterFilter: "Working"
+            //             }
+                    // },
+                    // {
+                    //     level: "Main Level",
+                    //     accessibility: true,
+                    //     vendingMachine: true,
+                    //     status: {
+                    //         pads: "low",
+                    //         tampons: "available",
+                    //         lastUpdated: "20 minutes ago",
+                    //         waterFilter: "Working"
+                    //     }
+                    // },
+                    // {
+                    //     level: "Upper Level",
+                    //     accessibility: true,
+                    //     vendingMachine: true,
+                    //     status: {
+                    //         pads: "low",
+                    //         tampons: "available",
+                    //         lastUpdated: "20 minutes ago",
+                    //         waterFilter: "Working"
+                    //     }
+            //         }
+            //     ]
+            // },
+            // {
+            //     id: 4,
+            //     name: "Chang Library",
+            //     location: { lat: 40.48037326005612, lng: -74.43538783196364 },
+            //     floors: [
+            //         {
+            //             level: "Lower Level",
+            //             accessibility: false,
+            //             vendingMachine: true,
+            //             status: {
+            //                 pads: "unavailable",
+            //                 tampons: "unavailable",
+            //                 lastUpdated: "1 hour ago",
+            //                 waterFilter: "Working"
+            //             }
+            //         }
+            //     ]
+            // },
+            // {
+            //     id: 5,
+            //     name: "Douglass Library",
+            //     location: { lat: 40.486128550530104, lng: -74.43584139333396 },
+            //     floors: [
+            //         {
+            //             level: "Lower Level",
+            //             accessibility: false,
+            //             vendingMachine: true,
+            //             status: {
+            //                 pads: "available",
+            //                 tampons: "available",
+            //                 lastUpdated: "1 hour ago",
+            //                 waterFilter: "Working"
+            //             }
+            //         },
+            //         {
+            //             level: "Basement Level",
+            //             accessibility: false,
+            //             vendingMachine: true,
+            //             status: {
+            //                 pads: "available",
+            //                 tampons: "available",
+            //                 lastUpdated: "10 hour ago",
+            //                 waterFilter: "Working"
+            //             }
+            //         },
+            //         {
+            //             level: "First Level",
+            //             accessibility: true,
+            //             vendingMachine: true,
+            //             status: {
+            //                 pads: "available",
+            //                 tampons: "available",
+            //                 lastUpdated: "1 hour ago",
+            //                 waterFilter: "Working"
+            //             }
+            //         }
+            //     ]
+            // },
+            // {
+            //     id: 6,
+            //     name: "Library of Science and Medicine",
+            //     location: { lat: 40.48037326005612, lng: -74.43538783196364 },
 
-                floors: [
-                    {
-                        level: "First Floor",
-                        accessibility: true,
-                        vendingMachine: true,
-                        status: {
-                            pads: "available",
-                            tampons: "low",
-                            lastUpdated: "18 hour ago",
-                            waterFilter: "Working"
-                        }
-                    },
-                    {
-                        level: "Second Floor",
-                        accessibility: true,
-                        vendingMachine: true,
-                        status: {
-                            pads: "available",
-                            tampons: "available",
-                            lastUpdated: "1 hour ago",
-                            waterFilter: "Working"
-                        }
-                    },
-                    {
-                        level: "Third Floor",
-                        accessibility: false,
-                        vendingMachine: true,
-                        status: {
-                            pads: "available",
-                            tampons: "available",
-                            lastUpdated: "15 minutes ago",
-                            waterFilter: "Working"
-                        }
-                    }
-                ]               
-            }, 
-            {
-                id: 7,
-                name: "Busch Student Center",
-                location: { lat: 40.52399684218192, lng: -74.45806752327873 },
-                floors: [
-                    {
-                        level: "Lower Level",
-                        accessibility: true,
-                        vendingMachine: true,
-                        status: {
-                            pads: "unavailable",
-                            tampons: "low",
-                            lastUpdated: "1 hour ago",
-                            waterFilter: "Working"
-                        }
-                    }
-                ]  
-            },
-            {
-                id: 8,
-                name: "College Ave Student Center",
-                location: { lat: 40.50305242092532, lng: -74.4522490729843 },
-                floors: [
-                    {
-                        level: "Lower Level",
-                        accessibility: true,
-                        vendingMachine: true,
-                        status: {
-                            pads: "unavailable",
-                            tampons: "low",
-                            lastUpdated: "1 hour ago",
-                            waterFilter: "Working"
-                        }
-                    }
-                ]  
-            }, 
-            {
-                id: 9,
-                name: "Cook Student Center",
-                location: { lat: 40.47906284221681, lng: -74.43162055044613 },
-                floors: [
-                    {
-                        level: "Lower Level",
-                        accessibility: true,
-                        vendingMachine: true,
-                        status: {
-                            pads: "unavailable",
-                            tampons: "low",
-                            lastUpdated: "1 hour ago",
-                            waterFilter: "Working"
-                        }
-                    }
-                ]  
-            }, 
-            {
-                id: 10,
-                name: "Douglass Student Center",
-                location: { lat: 40.4848230414018, lng: -74.43664895767213 },
-                floors: [
-                    {
-                        level: "Lower Level",
-                        accessibility: true,
-                        vendingMachine: true,
-                        status: {
-                            pads: "unavailable",
-                            tampons: "low",
-                            lastUpdated: "1 hour ago",
-                            waterFilter: "Working"
-                        }
-                    }
-                ]  
-            }, 
-            {
-                id: 11,
-                name: "Livingston Student Center",
-                location: { lat: 40.52360717505484, lng: -74.43718384232787 },
-                floors: [
-                    {
-                        level: "Lower Level",
-                        accessibility: true,
-                        vendingMachine: true,
-                        status: {
-                            pads: "unavailable",
-                            tampons: "low",
-                            lastUpdated: "1 hour ago",
-                            waterFilter: "Working"
-                        }
-                    }
-                ]  
-            },
-            {
-                id: 12,
-                name: "Student Activities Center",
-                location: { lat: 40.50442421399195, lng: -74.44899348465574 },
-                floors: [
-                    {
-                        level: "Lower Level",
-                        accessibility: true,
-                        vendingMachine: true,
-                        status: {
-                            pads: "unavailable",
-                            tampons: "low",
-                            lastUpdated: "1 hour ago",
-                            waterFilter: "Working"
-                        }
-                    }
-                ]  
+            //     floors: [
+            //         {
+            //             level: "First Floor",
+            //             accessibility: true,
+            //             vendingMachine: true,
+            //             status: {
+            //                 pads: "available",
+            //                 tampons: "low",
+            //                 lastUpdated: "18 hour ago",
+            //                 waterFilter: "Working"
+            //             }
+            //         },
+            //         {
+            //             level: "Second Floor",
+            //             accessibility: true,
+            //             vendingMachine: true,
+            //             status: {
+            //                 pads: "available",
+            //                 tampons: "available",
+            //                 lastUpdated: "1 hour ago",
+            //                 waterFilter: "Working"
+            //             }
+            //         },
+            //         {
+            //             level: "Third Floor",
+            //             accessibility: false,
+            //             vendingMachine: true,
+            //             status: {
+            //                 pads: "available",
+            //                 tampons: "available",
+            //                 lastUpdated: "15 minutes ago",
+            //                 waterFilter: "Working"
+            //             }
+            //         }
+            //     ]               
+            // }, 
+            // {
+            //     id: 7,
+            //     name: "Busch Student Center",
+            //     location: { lat: 40.52399684218192, lng: -74.45806752327873 },
+            //     floors: [
+            //         {
+            //             level: "Lower Level",
+            //             accessibility: true,
+            //             vendingMachine: true,
+            //             status: {
+            //                 pads: "unavailable",
+            //                 tampons: "low",
+            //                 lastUpdated: "1 hour ago",
+            //                 waterFilter: "Working"
+            //             }
+            //         }
+            //     ]  
+            // },
+            // {
+            //     id: 8,
+            //     name: "College Ave Student Center",
+            //     location: { lat: 40.50305242092532, lng: -74.4522490729843 },
+            //     floors: [
+            //         {
+            //             level: "Lower Level",
+            //             accessibility: true,
+            //             vendingMachine: true,
+            //             status: {
+            //                 pads: "unavailable",
+            //                 tampons: "low",
+            //                 lastUpdated: "1 hour ago",
+            //                 waterFilter: "Working"
+            //             }
+            //         }
+            //     ]  
+            // }, 
+            // {
+            //     id: 9,
+            //     name: "Cook Student Center",
+            //     location: { lat: 40.47906284221681, lng: -74.43162055044613 },
+            //     floors: [
+            //         {
+            //             level: "Lower Level",
+            //             accessibility: true,
+            //             vendingMachine: true,
+            //             status: {
+            //                 pads: "unavailable",
+            //                 tampons: "low",
+            //                 lastUpdated: "1 hour ago",
+            //                 waterFilter: "Working"
+            //             }
+            //         }
+            //     ]  
+            // }, 
+            // {
+            //     id: 10,
+            //     name: "Douglass Student Center",
+            //     location: { lat: 40.4848230414018, lng: -74.43664895767213 },
+            //     floors: [
+            //         {
+            //             level: "Lower Level",
+            //             accessibility: true,
+            //             vendingMachine: true,
+            //             status: {
+            //                 pads: "unavailable",
+            //                 tampons: "low",
+            //                 lastUpdated: "1 hour ago",
+            //                 waterFilter: "Working"
+            //             }
+            //         }
+            //     ]  
+            // }, 
+            // {
+            //     id: 11,
+            //     name: "Livingston Student Center",
+            //     location: { lat: 40.52360717505484, lng: -74.43718384232787 },
+            //     floors: [
+            //         {
+            //             level: "Lower Level",
+            //             accessibility: true,
+            //             vendingMachine: true,
+            //             status: {
+            //                 pads: "unavailable",
+            //                 tampons: "low",
+            //                 lastUpdated: "1 hour ago",
+            //                 waterFilter: "Working"
+            //             }
+            //         }
+            //     ]  
+            // },
+        //     {
+        //         id: 12,
+        //         name: "Student Activities Center",
+        //         location: { lat: 40.50442421399195, lng: -74.44899348465574 },
+        //         floors: [
+        //             {
+        //                 level: "Lower Level",
+        //                 accessibility: true,
+        //                 vendingMachine: true,
+        //                 status: {
+        //                     pads: "unavailable",
+        //                     tampons: "low",
+        //                     lastUpdated: "1 hour ago",
+        //                     waterFilter: "Working"
+        //                 }
+        //             }
+        //         ]  
+        //     }
+        // ];
+        let washroomLocations = [];
+        async function fetchWashroomData() {
+            console.log('Attempting to fetch washroom data...');
+            try {
+                const response = await fetch('/api/washrooms');
+                console.log('Response received:', response);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch washroom data');
+                }
+                washroomLocations = await response.json();
+                console.log('Washroom data loaded:', washroomLocations);
+                initMap(); // Initialize map after data is loaded
+            } catch (error) {
+                console.error('Error fetching washroom data:', error);
+                document.getElementById('map').innerHTML = 'Error loading map data. Please check the console.';
             }
-        ];
-
+        }
+    
         function initMap() {
             // Center the map on Rutgers University
             const map = new google.maps.Map(document.getElementById('map'), {
@@ -603,17 +621,38 @@
                 const updateData = {
                     washroomId,
                     floorLevel,
-                    waterFilter: formData.get('waterFilter') === 'true',
-                    pads: formData.get('pads'),
-                    tampons: formData.get('tampons'),
-                    lastUpdated: new Date().toISOString()
+                    status: {
+                        waterFilter: formData.get('waterFilter'),
+                        pads: formData.get('pads'),
+                        tampons: formData.get('tampons'),
+                        lastUpdated: new Date().toLocaleString()
+                    }
                 };
-
-                // Here we'll add the MongoDB update logic
-                console.log('Update data:', updateData);
+                // // Here we'll add the MongoDB update logic
+                // console.log('Update data:', updateData);
                 
-                // For now, just close the form
-                closeUpdateForm();
+                // // For now, just close the form
+                // closeUpdateForm();
+                try {
+                    const response = await fetch('/api/updateStatus', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(updateData)
+                    });
+
+                    if (response.ok) {
+                        // Refresh the data
+                        await fetchWashroomData();
+                        closeUpdateForm();
+                    } else {
+                        throw new Error('Failed to update status');
+                    }
+                } catch (error) {
+                    console.error('Error updating status:', error);
+                    alert('Failed to update status. Please try again.');
+                }
             };
         }
 
@@ -631,7 +670,21 @@
         }
     </script>
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBZy99PR8XjK7jyuHj4aKg6oZerc57cQU&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBZy99PR8XjK7jyuHj4aKg6oZerc57cQU"
+        onerror="handleMapError()"
+        onload="fetchWashroomData()">
+    </script>
+    <script>
+        function handleMapError() {
+            document.getElementById('map').innerHTML = `
+                <div style="text-align: center; padding: 20px;">
+                    <p>Failed to load Google Maps. Please check your internet connection and try again.</p>
+                    <button onclick="location.reload()" style="padding: 8px 16px; margin-top: 10px; cursor: pointer;">
+                        Retry
+                    </button>
+                </div>
+            `;
+        }
     </script>
 </body>
 </html>
