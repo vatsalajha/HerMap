@@ -1,0 +1,33 @@
+const WashroomSchema = {
+    name: String,
+    building: String,
+    floor: String,
+    coordinates: {
+      lat: Number,
+      lng: Number
+    },
+    status: {
+      pads: {
+        type: String,
+        enum: ['available', 'low', 'unavailable'],
+        default: 'unavailable'
+      },
+      tampons: {
+        type: String,
+        enum: ['available', 'low', 'unavailable'],
+        default: 'unavailable'
+      },
+      lastUpdated: Date
+    },
+    details: {
+      isAccessible: Boolean,
+      hasVendingMachine: Boolean,
+      notes: String
+    },
+    statusHistory: [{
+      pads: String,
+      tampons: String,
+      reportedBy: String,
+      timestamp: Date
+    }]
+  }
