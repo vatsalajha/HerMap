@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Product Availability</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        .header { padding: 20px; background: #ff4f6f; color: white; text-align: center; font-size: 24px; }
+        .container { width: 80%; margin: 20px auto; padding: 20px; background: #f9f9f9; border-radius: 8px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        select, input, textarea { width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; }
+        button { background: #ff4f6f; color: white; padding: 10px 15px; border: none; cursor: pointer; font-size: 16px; }
+        button:hover { background: #e03e5d; }
+    </style>
+</head>
+<body>
+    <div class="header">Report Product Availability</div>
+    <div class="container">
+        <form id="report-form">
+            <div class="form-group">
+                <label for="location">Select Location:</label>
+                <select id="location" name="location" required>
+                    <option value="">-- Select --</option>
+                    <option value="Busch Student Center">Busch Student Center</option>
+                    <option value="Alexander Library">Alexander Library</option>
+                    <option value="Livingston Student Center">Livingston Student Center</option>
+                    <option value="Douglas Student Center">Douglas Student Center</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="availability">Product Availability:</label>
+                <select id="availability" name="availability" required>
+                    <option value="">-- Select --</option>
+                    <option value="Pads Available">Pads Available</option>
+                    <option value="Tampons Available">Tampons Available</option>
+                    <option value="Both Available">Both Available</option>
+                    <option value="Out of Stock">Out of Stock</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="comments">Additional Comments (Optional):</label>
+                <textarea id="comments" name="comments" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="image">Upload an Image (Optional):</label>
+                <input type="file" id="image" name="image" accept="image/*">
+            </div>
+            <button type="submit">Submit Report</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('report-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Report submitted successfully!');
+        });
+    </script>
+</body>
+</html>
