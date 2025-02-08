@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutgers Washroom Locator</title>
+    <style>
+        /* Main container styles */
+        #map {
+            height: 500px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        /* Custom info window styles */
+        .washroom-info {
+            padding: 15px;
+            max-width: 300px;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            font-size: 14px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-available { background-color: #22c55e; }
+        .status-low { background-color: #f59e0b; }
+        .status-unavailable { background-color: #dc2626; }
+
+        .last-updated {
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .report-button {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script>
+        // This data would ideally come from your backend
+        const washroomLocations = [
+            {
+                id: 1,
+                name: "Alexander Library - First Floor",
+                location: { lat: 40.50500, lng: -74.45217 },
+                status: {
+                    pads: "available",
+                    tampons: "low",
+                    lastUpdated: "10 minutes ago"
+                },
+                details0: {
+                    floor: "Basement",
+                    accessibility: false,
+                    vendingMachine: true
+                },
+                details1: {
+                    floor: "1st Floor",
+                    accessibility: true,
+                    vendingMachine: true
+                },
+                details2: {
+                    floor: "2nd Floor",
+                    accessibility: true,
+                    vendingMachine: true
+                },
+                details3: {
+                    floor: "3rd Floor",
+                    accessibility: true,
+                    vendingMachine: true
+                }
+            },
+            {
+                id: 2,
+                name: "Art Library",
+                location: { lat: 40.49988, lng: -74.44620 },
+                status: {
+                    pads: "unavailable",
+                    tampons: "available",
+                    lastUpdated: "1 hour ago"
+                },
+                details1: {
+                    floor: "Lower Level",
+                    accessibility: true,
+                    vendingMachine: true
+                },
+                details2: {
+                    floor: "Main Level",
+                    accessibility: true,
+                    vendingMachine: true
+                }
+            },
+            {
+                id: 3,
+                name: "Carr Library",
+                location: { lat: 40.52264, lng: -74.43743 },
+                status: {
+                    pads: "unavailable",
+                    tampons: "available",
+                    lastUpdated: "1 hour ago"
+                },
+                details: {
+                    floor: "Ground Floor",
+                    accessibility: true,
+                    vendingMachine: true
+                }
+            }
+            // Add more locations as needed
+        ];
+
+        function initMap() {
+            // Center the map on Rutgers University
+            const map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 40.5008, lng: -74.4474 },
+                zoom: 16,
+                styles: [
+                    {
+                        // Remove default POIs to reduce clutter
+                        featureType: "poi",
+                        elementType: "labels",
+                        stylers: [{ visibility: "off" }]
+                    }
+                ]
+            });
+
+            // Create info window instance
+            const infoWindow = new google.maps.InfoWindow();
+
+            // Add markers for each washroom
+            washroomLocations.forEach(washroom => {
+                const marker = new google.maps.Marker({
+                    position: washroom.location,
+                    map: map,
+                    title: washroom.name,
+                    icon: {
+                        url: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png', // Custom icon if needed
+                        scaledSize: new google.maps.Size(32, 32)
+                    }
+                });
+
+                // Add click listener to show info window
+                marker.addListener('click', () => {
+                    const content = createInfoWindowContent(washroom);
+                    infoWindow.setContent(content);
+                    infoWindow.open(map, marker);
+                });
+            });
+
+            // Add custom controls if needed
+            addCustomControls(map);
+        }
+
+        function createInfoWindowContent(washroom) {
+            return `
+                <div class="washroom-info">
+                    <h3>${washroom.name}</h3>
+                    <div class="status-indicator">
+                        <span class="status-dot status-${washroom.status.pads}"></span>
+                        Pads: ${washroom.status.pads}
+                    </div>
+                    <div class="status-indicator">
+                        <span class="status-dot status-${washroom.status.tampons}"></span>
+                        Tampons: ${washroom.status.tampons}
+                    </div>
+                    <div class="details">
+                        <p>Floor: ${washroom.details.floor}</p>
+                        <p>Accessibility: ${washroom.details.accessibility ? '♿ Accessible' : 'Not accessible'}</p>
+                        <p>Vending Machine: ${washroom.details.vendingMachine ? '✓ Available' : '✗ Not available'}</p>
+                    </div>
+                    <div class="last-updated">
+                        Last updated: ${washroom.status.lastUpdated}
+                    </div>
+                    <button class="report-button" onclick="reportStatus(${washroom.id})">
+                        Report Status
+                    </button>
+                </div>
+            `;
+        }
+
+        function addCustomControls(map) {
+            // Add custom controls here if needed
+            // For example, filters for accessibility, vending machines, etc.
+        }
+
+        function reportStatus(washroomId) {
+            // Implement status reporting functionality
+            console.log(`Reporting status for washroom ${washroomId}`);
+        }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBZy99PR8XjK7jyuHj4aKg6oZerc57cQU&callback=initMap">
+    </script>
+</body>
+</html>
