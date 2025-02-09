@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 500;
 
 // ✅ Middleware
 app.use(cors()); // Fix CORS issues
@@ -74,6 +74,8 @@ app.patch("/update-status", async (req, res) => {
     try {
         const { id, floor, vendingMachine, pads, tampons, waterFilter } = req.body;
 
+        console.log("Request Body:", req.body);
+
         // Find the washroom
         const washroom = await Washroom.findOne({ id: parseInt(id) });
         if (!washroom) {
@@ -85,13 +87,15 @@ app.patch("/update-status", async (req, res) => {
         if (floorIndex === -1) {
             return res.status(404).json({ message: "Floor not found" });
         }
-
+        console.log("Updating floor details with:", { vendingMachine, pads, tampons, waterFilter });
         // Update the floor details
         washroom.floors[floorIndex].vendingMachine = vendingMachine;
         washroom.floors[floorIndex].status.pads = pads;
         washroom.floors[floorIndex].status.tampons = tampons;
         washroom.floors[floorIndex].status.waterFilter = waterFilter;
         washroom.floors[floorIndex].status.lastUpdated = new Date().toLocaleString();
+
+        console.log("Updated Washroom:", washroom);
 
         // Save the updated washroom
         await washroom.save();

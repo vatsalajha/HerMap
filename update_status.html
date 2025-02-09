@@ -137,19 +137,16 @@
                 const hasMachine = document.querySelector("input[name='machine']:checked")?.value === "yes";
 
                 const updateData = {
-                    id: washroomId,
+                    id: parseInt(washroomId),
                     floor: floorLevel,
                     vendingMachine: hasMachine,
-                    status: {
-                        pads: hasMachine ? document.getElementById("pads").value : "N/A",
-                        tampons: hasMachine ? document.getElementById("tampons").value : "N/A",
-                        lastUpdated: new Date().toLocaleString(),
-                        waterFilter: document.querySelector("input[name='waterFilter']:checked")?.value || "Unknown"
-                    }
+                    pads: hasMachine ? document.getElementById("pads").value : "N/A",
+                    tampons: hasMachine ? document.getElementById("tampons").value : "N/A",
+                    waterFilter: document.querySelector("input[name='waterFilter']:checked")?.value || "Unknown"
                 };
 
                 try {
-                    const response = await fetch(`http://localhost:5000/update-status`, {
+                    const response = await fetch(`http://localhost:5001/update-status`, {
                         method: "PATCH",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(updateData)
