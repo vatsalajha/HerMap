@@ -310,6 +310,10 @@
                     <p>Anonymous updated <strong>${update.building} ${update.floor}</strong></p>
                     <span class="verified-badge">Verified</span>
                     <p class="timestamp">${timeSince(new Date(update.timestamp))} ago</p>
+                    <p><strong>Pads:</strong> ${update.changes.pads}</p>
+                    <p><strong>Tampons:</strong> ${update.changes.tampons}</p>
+                    <p><strong>Water Filter:</strong> 💧 ${update.changes.waterFilter}</p>
+                    <p><strong>Vending Machine:</strong> ${update.changes.vendingMachine ? '🏧 Available' : '❌ Not Available'}</p>
                 `;
 
                 updateCard.appendChild(avatar);
@@ -347,7 +351,7 @@
         window.onload = () => {
             fetchWashrooms();
             fetchUpdates();
-            setInterval(fetchUpdates, 600); // Poll every minute
+            setInterval(fetchUpdates, 60000); // Poll every minute
         };
     </script>
 </body>
