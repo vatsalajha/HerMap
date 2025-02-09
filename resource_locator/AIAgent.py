@@ -69,10 +69,10 @@ menstrual_health_agent_team = Agent(
 )
 
 # Streamlit User Interface
-st.title("🌸 Menstrual Health Buddy")
+st.title("🌸 HerMap: Your Menstrual Health Companion")
 
 # Chatbot greeting
-st.markdown("### 👋 Hey! I'm here for you. Ask me anything about menstrual health, and I'll do my best to help!")
+st.markdown("### 👋 Find resources, access support, and stay informed—all in one place. Real-time updates, AI-powered advice, and an intuitive map make managing menstrual health easier than ever. 💕")
 
 #Query Input
 user_query = st.text_input("What's on your mind? 💭")

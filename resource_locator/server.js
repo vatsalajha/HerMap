@@ -129,32 +129,8 @@ app.get("/washrooms/:id", async (req, res) => {
   }
 });
 
-// ✅ API Route to Update Washroom Status (For "Update Status" Button)
-// app.put("/update-status", async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const updateData = req.body; // Contains pads, tampons, and waterFilter status
-
-//     // Find the washroom and update its floor details
-//     const washroom = await Washroom.findOneAndUpdate(
-//       { id: parseInt(id) },
-//       { $set: { "floors.$[].status": updateData } }, // Update status for all floors
-//       { new: true }
-//     );
-
-//     if (!washroom)
-//       return res.status(404).json({ message: "Washroom not found" });
-
-//     res.json({ message: "Washroom status updated successfully", washroom });
-//   } catch (err) {
-//     console.error("Error updating washroom:", err);
-//     res.status(500).json({ error: err.message });
-//   }
-// });
-
 app.put("/update-status", async (req, res) => {
   try {
-    // 🔥 Fix: Ensure ⁠ id ⁠ is properly extracted and parsed
     if (!req.body.id) {
       return res
         .status(400)
@@ -168,7 +144,6 @@ app.put("/update-status", async (req, res) => {
 
     const { floor, status, vendingMachine } = req.body;
 
-    // 🔥 Fix: Update the *specific* floor, not all floors
     const washroom = await Washroom.findOneAndUpdate(
       { id: washroomId, "floors.level": floor },
       {
