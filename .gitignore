@@ -56,13 +56,6 @@ __pycache__/
 .streamlit/
 watchdog_debug.log
 
-# HTML files
-one.html
-update-status.html
-
-# JavaScript/Node.js
-server.js
-
 # Config files
 *.json
 package-lock.json
