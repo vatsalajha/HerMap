@@ -3,107 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlowMap - Find Menstrual Products Near You</title>
-    <script src="constants.js"></script>
-    <script>
-        document.write(`<script src="https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places"><\/script>`);
-    </script>
+    <title>Rutgers Washroom Locator</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
-        .header { padding: 20px; background: #ff4f6f; color: white; text-align: center; font-size: 24px; }
-        .report-btn { display: block; margin: 20px auto; padding: 10px 20px; background: #ff4f6f; color: white; border: none; cursor: pointer; font-size: 18px; }
-        #map { height: 80vh; width: 100%; }
-        
-        /* Street View Overlay */
-        #street-view-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
         }
-        #street-view-container {
-            width: 80%;
-            height: 80%;
-            background: #fff;
-            position: relative;
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
             border-radius: 10px;
-            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
-        #close-street-view {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 24px;
-            color: white;
+
+        h1 {
+            color: #ff4f6f;
+        }
+
+        p {
+            font-size: 18px;
+            color: #444;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
             cursor: pointer;
-            z-index: 1100;
-            background: red;
-            padding: 5px 10px;
-            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .map-btn {
+            background-color: #ff4f6f;
+            color: white;
+        }
+
+        .map-btn:hover {
+            background-color: #e63e5c;
+        }
+
+        .chat-btn {
+            background-color: #007bff;
+            color: white;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-btn:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <div class="header">FlowMap - Find Menstrual Products Near You</div>
-    <div id="map"></div>
-    <button class="report-btn" onclick="location.href='report.html'">Report Product Availability</button>
-    
-    <!-- Street View Overlay -->
-    <div id="street-view-overlay">
-        <span id="close-street-view">✖</span>
-        <div id="street-view-container"></div>
+
+    <div class="container">
+        <h1>Rutgers Washroom Locator</h1>
+        <p>Find restrooms with available menstrual hygiene products at Rutgers University.</p>
+        <p>Help others by updating the availability of pads, tampons, and water filters.</p>
+
+        <button class="btn map-btn" onclick="window.location.href='one.html'">View Map</button>
     </div>
-    
+
+    <!-- Chatbot Button -->
+    <div class="chat-btn" onclick="openChatbot()">💬</div>
+
     <script>
-        function initMap() {
-            const rutgers = { lat: 40.5006, lng: -74.4474 }; // Rutgers University Coordinates
-            const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 15,
-                center: rutgers,
-            });
-            
-            const locations = [
-                { lat: 40.5233784, lng: -74.458233, name: "Busch Student Center" },
-                { lat: 40.5049174, lng: -74.4524484, name: "Alexander Library" },
-                { lat: 40.5239427, lng: -74.4367513, name: "Livingston Student Center" },
-                { lat: 40.4848414, lng: -74.4366953, name: "Douglas Student Center" }
-            ];
-            
-            locations.forEach(location => {
-                const marker = new google.maps.Marker({
-                    position: { lat: location.lat, lng: location.lng },
-                    map,
-                    title: location.name,
-                });
-                
-                marker.addListener("click", () => {
-                    openStreetView(location.lat, location.lng);
-                });
-            });
+        function openChatbot() {
+            alert("Chatbot coming soon! 🚀"); 
+            // You can integrate a real chatbot later!
         }
-        
-        function openStreetView(lat, lng) {
-            document.getElementById("street-view-overlay").style.display = "flex";
-            const streetViewContainer = document.getElementById("street-view-container");
-            new google.maps.StreetViewPanorama(streetViewContainer, {
-                position: { lat: lat, lng: lng },
-                pov: { heading: 0, pitch: 0 },
-                zoom: 1,
-                visible: true,
-            });
-        }
-        
-        document.getElementById("close-street-view").addEventListener("click", function() {
-            document.getElementById("street-view-overlay").style.display = "none";
-        });
-        
-        window.onload = initMap;
     </script>
+
 </body>
 </html>
