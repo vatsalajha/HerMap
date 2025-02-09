@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Washroom Status</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f8f9fa;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 500px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      h2 {
+        text-align: center;
+        color: #1a365d;
+      }
+
+      label {
+        font-weight: bold;
+        display: block;
+        margin-top: 10px;
+      }
+
+      select,
+      button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+      }
+
+      button {
+        background: #007bff;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+        border: none;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        background: #0056b3;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .radio-group {
+        display: flex;
+        gap: 10px;
+        margin-top: 5px;
+      }
+
+      .radio-group label {
+        font-weight: normal;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Update Washroom Status</h2>
+
+      <p><strong>Building:</strong> <span id="buildingName"></span></p>
+      <p><strong>Floor:</strong> <span id="floorLevel"></span></p>
+
+      <!-- Menstrual Hygiene Machine -->
+      <label>Is there a Menstrual Hygiene Machine?</label>
+      <div class="radio-group">
+        <input type="radio" name="machine" value="yes" id="machineYes" />
+        <label for="machineYes">Yes</label>
+        <input type="radio" name="machine" value="no" id="machineNo" />
+        <label for="machineNo">No</label>
+      </div>
+
+      <!-- Pads Availability (Hidden Initially) -->
+      <div id="hygieneOptions" class="hidden">
+        <label for="pads">Pads Availability:</label>
+        <select id="pads">
+          <option value="available">Available</option>
+          <option value="low">Low</option>
+          <option value="unavailable">Unavailable</option>
+        </select>
+
+        <label for="tampons">Tampons Availability:</label>
+        <select id="tampons">
+          <option value="available">Available</option>
+          <option value="low">Low</option>
+          <option value="unavailable">Unavailable</option>
+        </select>
+      </div>
+
+      <!-- Water Filter Status -->
+      <label>Water Filter Status:</label>
+      <div class="radio-group">
+        <input
+          type="radio"
+          name="waterFilter"
+          value="Working"
+          id="waterWorking"
+        />
+        <label for="waterWorking">💧 Working</label>
+        <input
+          type="radio"
+          name="waterFilter"
+          value="Not Working"
+          id="waterNotWorking"
+        />
+        <label for="waterNotWorking">❌ Not Working</label>
+      </div>
+
+      <button id="submitUpdate">Submit Update</button>
+    </div>
+
+    <script>
+      // Get Washroom ID & Floor from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const washroomId = urlParams.get("id");
+      const floorLevel = urlParams.get("floor");
+      const buildingName = urlParams.get("name");
+
+      // Set Building & Floor Name, handling missing values
+      document.getElementById("buildingName").innerText = buildingName
+        ? decodeURIComponent(buildingName)
+        : "Not Provided";
+      document.getElementById("floorLevel").innerText = floorLevel
+        ? floorLevel
+        : "Not Provided";
+
+      // Show/Hide Hygiene Options
+      document.querySelectorAll("input[name='machine']").forEach((input) => {
+        input.addEventListener("change", function () {
+          document
+            .getElementById("hygieneOptions")
+            .classList.toggle("hidden", this.value === "no");
+        });
+      });
+
+      // Handle Form Submission
+      document
+        .getElementById("submitUpdate")
+        .addEventListener("click", async function () {
+          const hasMachine =
+            document.querySelector("input[name='machine']:checked")?.value ===
+            "yes";
+          const updateData = {
+            id: washroomId,
+            floor: floorLevel,
+            vendingMachine: hasMachine,
+            status: {
+              pads: hasMachine ? document.getElementById("pads").value : "N/A",
+              tampons: hasMachine
+                ? document.getElementById("tampons").value
+                : "N/A",
+              lastUpdated: new Date().toLocaleString(),
+              waterFilter: document.querySelector(
+                "input[name='waterFilter']:checked"
+              ).value,
+            },
+          };
+
+          try {
+            const response = await fetch(
+              `http://localhost:5001/update-status`,
+              {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updateData),
+              }
+            );
+
+            if (response.ok) {
+              alert("Washroom status updated successfully!");
+              window.location.href = "one.html"; // Redirect back to map
+            } else {
+              alert("Error updating status.");
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert("Failed to update status.");
+          }
+        });
+    </script>
+  </body>
+</html>

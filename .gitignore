@@ -1,2 +1,68 @@
-constants.js
+# Node.js
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+/coverage
+/dist
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*.local
+
+# Logs
+logs
+*.log
+*.out
+*.err
+pids
+*.pid
+*.seed
+*.pid.lock
+*.gz
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE and Editor
+.idea/
+.vscode/
+*.sublime-workspace
+
+# Build artifacts
+/build
+/public
+
+# Generated files
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+
+# Python virtual environment
+.venv/
+*.env
+*.venv.bak
+
+# Streamlit
+.streamlit/
+watchdog_debug.log
+
+# HTML files
+one.html
+update-status.html
+
+# JavaScript/Node.js
+server.js
+
+# Config files
+*.json
+package-lock.json
