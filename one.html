@@ -59,6 +59,7 @@
     </style>
 </head>
 <body>
+    
     <div id="map"></div>
 
     <script>
@@ -78,12 +79,22 @@
                 zoom: 15,
                 center: rutgers,
                 styles: [
-                    {
-                        featureType: "poi",
-                        elementType: "labels",
-                        stylers: [{ visibility: "off" }]
-                    }
-                ]
+                {
+                    featureType: "all",
+                    elementType: "geometry",
+                    stylers: [{ color: "#e9e9e9" }]
+                },
+                {
+                    featureType: "poi",
+                    elementType: "labels",
+                    stylers: [{ visibility: "off" }]
+                },
+                {
+                    featureType: "water",
+                    elementType: "geometry",
+                    stylers: [{ color: "#c9dff0" }]
+                }
+            ]
             });
 
             const infoWindow = new google.maps.InfoWindow();
@@ -108,25 +119,90 @@
         }
 
         function createInfoWindowContent(washroom) {
-            let content = `
-                <div class="washroom-info">
-                    <h3>${washroom.name}</h3>
-            `;
+        let content = `
+        <div class="washroom-info" style="
+            padding: 16px;
+            max-width: 350px;
+            font-family: system-ui, sans-serif;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            background: white;
+            border: 1px solid #ddd;
+        ">
+            <h3 style="
+                margin: 0;
+                font-size: 18px;
+                color: #1a365d;
+                font-weight: bold;
+            ">${washroom.name}</h3>
+    `;
 
-            washroom.floors.forEach(floor => {
-                content += `
-                    <div>
-                        <h4>${floor.level}</h4>
-                        <p><span class="status-dot status-${floor.status.pads}"></span> Pads: ${floor.status.pads}</p>
-                        <p><span class="status-dot status-${floor.status.tampons}"></span> Tampons: ${floor.status.tampons}</p>
-                        <p class="last-updated">Last updated: ${floor.status.lastUpdated}</p>
-                    </div>
-                `;
-            });
+    washroom.floors.forEach(floor => {
+        content += `
+            <div style="
+                margin-top: 10px;
+                padding: 10px;
+                border-radius: 8px;
+                background: #f9f9f9;
+                border: 1px solid #ddd;
+            ">
+                <h4 style="margin: 0 0 6px 0; font-size: 16px;">${floor.level}</h4>
+                
+                <p style="display: flex; align-items: center; margin: 4px 0;">
+                <span style="
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    margin-right: 6px;
+                    background-color: ${floor.status.pads === 'available' ? '#22c55e' : 
+                                    floor.status.pads === 'low' ? '#f59e0b' : '#dc2626'};
+                "></span> 
+                <strong>Pads:</strong> <span style="margin-left: 4px;">${floor.status.pads}</span>
+            </p>
 
-            content += '</div>';
-            return content;
-        }
+            <p style="display: flex; align-items: center; margin: 4px 0;">
+                <span style="
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    margin-right: 6px;
+                    background-color: ${floor.status.tampons === 'available' ? '#22c55e' : 
+                                    floor.status.tampons === 'low' ? '#f59e0b' : '#dc2626'};
+                "></span> 
+                <strong>Tampons:</strong> <span style="margin-left: 4px;">${floor.status.tampons}</span>
+            </p>
+
+                <p style="margin: 8px 0; font-size: 14px;">
+                    ${floor.accessibility ? '♿ <strong>Accessible</strong>' : '⚠️ <strong>Not accessible</strong>'} <br>
+                    ${floor.vendingMachine ? '🏧 <strong>Vending machine available</strong>' : '❌ <strong>No vending machine</strong>'} <br>
+                    ${floor.status.waterFilter === "Working" ? '💧 <strong>Water filter working</strong>' : '❌ <strong>Water filter not working</strong>'}
+                </p>
+
+                <p style="font-size: 12px; color: #666; margin-top: 8px;">
+                    ${floor.status.lastUpdated}
+                </p>
+
+                <button onclick="showUpdateForm('${washroom.id}', '${floor.level}')" style="
+                    width: 100%;
+                    padding: 10px;
+                    border: none;
+                    background: #4299e1;
+                    color: white;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    transition: 0.3s;
+                ">Update Status</button>
+            </div>
+        `;
+    });
+
+    content += '</div>';
+    return content;
+}
+
 
         window.onload = fetchWashrooms;
     </script>
