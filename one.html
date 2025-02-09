@@ -120,22 +120,22 @@
 
         function createInfoWindowContent(washroom) {
         let content = `
-        <div class="washroom-info" style="
-            padding: 16px;
-            max-width: 350px;
-            font-family: system-ui, sans-serif;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            background: white;
-            border: 1px solid #ddd;
-        ">
-            <h3 style="
-                margin: 0;
-                font-size: 18px;
-                color: #1a365d;
-                font-weight: bold;
-            ">${washroom.name}</h3>
-    `;
+            <div class="washroom-info" style="
+                padding: 16px;
+                max-width: 350px;
+                font-family: system-ui, sans-serif;
+                border-radius: 10px;
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+                background: white;
+                border: 1px solid #ddd;
+            ">
+                <h3 style="
+                    margin: 0;
+                    font-size: 18px;
+                    color: #1a365d;
+                    font-weight: bold;
+                ">${washroom.name}</h3>
+        `;
 
     washroom.floors.forEach(floor => {
         content += `
@@ -184,17 +184,18 @@
                     ${floor.status.lastUpdated}
                 </p>
 
-                <button onclick="showUpdateForm('${washroom.id}', '${floor.level}')" style="
-                    width: 100%;
-                    padding: 10px;
-                    border: none;
-                    background: #4299e1;
-                    color: white;
-                    border-radius: 6px;
-                    cursor: pointer;
-                    font-size: 14px;
-                    transition: 0.3s;
-                ">Update Status</button>
+                <button onclick="window.location.href = 'update_status.html?id=${washroom.id}&name=${washroom.name}&floor=${floor.level}'" style="
+                width: 100%;
+                padding: 10px;
+                border: none;
+                background: #4299e1;
+                color: white;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: 0.3s;
+            ">Update Status</button>
+
             </div>
         `;
     });
