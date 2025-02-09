@@ -4,11 +4,10 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT || 500;
+const PORT = process.env.PORT || 5001;
 
-// ✅ Middleware
-app.use(cors()); // Fix CORS issues
-app.use(express.json()); // Allow JSON requests
+app.use(cors()); 
+app.use(express.json());
 
 // ✅ Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI, {
@@ -44,6 +43,22 @@ const WashroomSchema = new mongoose.Schema({
     ]
 });
 
+// Define the Update schema
+const UpdateSchema = new mongoose.Schema({
+    building: String,
+    floor: String,
+    timestamp: { type: Date, default: Date.now },
+    changes: {
+        pads: String,
+        tampons: String,
+        waterFilter: String,
+        vendingMachine: Boolean
+    }
+});
+
+
+const Update = mongoose.model("Update", UpdateSchema, "HerMaps_Updates");
+
 // ✅ Create Model
 const Washroom = mongoose.model("Washroom", WashroomSchema, "HerMaps_Reports");
 
@@ -75,20 +90,16 @@ app.patch("/update-status", async (req, res) => {
         const { id, floor, vendingMachine, pads, tampons, waterFilter } = req.body;
 
         console.log("Request Body:", req.body);
-
-        // Find the washroom
         const washroom = await Washroom.findOne({ id: parseInt(id) });
         if (!washroom) {
             return res.status(404).json({ message: "Washroom not found" });
         }
 
-        // Find the floor to update
         const floorIndex = washroom.floors.findIndex(f => f.level === floor);
         if (floorIndex === -1) {
             return res.status(404).json({ message: "Floor not found" });
         }
         console.log("Updating floor details with:", { vendingMachine, pads, tampons, waterFilter });
-        // Update the floor details
         washroom.floors[floorIndex].vendingMachine = vendingMachine;
         washroom.floors[floorIndex].status.pads = pads;
         washroom.floors[floorIndex].status.tampons = tampons;
@@ -97,7 +108,6 @@ app.patch("/update-status", async (req, res) => {
 
         console.log("Updated Washroom:", washroom);
 
-        // Save the updated washroom
         await washroom.save();
         
         res.json({ message: "✅ Washroom status updated successfully!" });
@@ -108,5 +118,25 @@ app.patch("/update-status", async (req, res) => {
     }
 });
 
-// ✅ Start the Server
+// Endpoint to store new updates
+app.post("/updates", async (req, res) => {
+    try {
+        const update = new Update(req.body);
+        await update.save();
+        res.status(201).json(update);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Endpoint to fetch the 10 most recent updates
+app.get("/updates", async (req, res) => {
+    try {
+        const updates = await Update.find().sort({ timestamp: -1 }).limit(10);
+        res.json(updates);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

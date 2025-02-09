@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rutgers Washroom Locator</title>
+    <title>Rutgers Sanitary Products Locator</title>
     <script src="constants.js"></script>
     <script>
         document.write(`<script src="https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places"><\/script>`);
     </script>
     <style>
-        /* Main container styles */
         body {
             font-family: Arial, sans-serif;
             background: #ffe6f2;
@@ -29,7 +28,6 @@
             margin-bottom: 20px;
         }
 
-        /* Custom info window styles */
         .washroom-info {
             padding: 15px;
             max-width: 350px;
@@ -80,25 +78,81 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+        .updates-section {
+            margin: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .update-card {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .update-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ff99cc;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .update-info {
+            flex: 1;
+        }
+
+        .verified-badge {
+            background-color: #22c55e;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        .timestamp {
+            font-size: 12px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
     <div class="navbar">
-        <span>Washroom Locator Dashboard</span>
+        <span>Sanitary Products Locator Dashboard</span>
     </div>
     <div id="map"></div>
 
     <div class="agent-section">
         <h2>PhiData Agent</h2>
         <p>Ask any questions related to periods or menstrual hygiene.</p>
-        <!-- Add your PhiData agent integration here -->
+    </div>
+
+    <div class="updates-section">
+        <h2>Recent Updates</h2>
+        <div id="updatesContainer"></div>
     </div>
 
     <script>
         async function fetchWashrooms() {
             try {
                 console.log("🔍 Fetching washroom data...");
-                const response = await fetch("http://localhost:5001/washrooms"); // API Call
+                const response = await fetch("http://localhost:5001/washrooms");
                 const washroomLocations = await response.json();
                 console.log("✅ Washrooms:", washroomLocations);
                 initMap(washroomLocations);
@@ -132,7 +186,6 @@
                     position: washroom.location,
                     map: map,
                     title: washroom.name
-                    // Removed custom icon, so it now uses the default Google Maps marker
                 });
 
                 marker.addListener("click", () => {
@@ -229,7 +282,73 @@
             return content;
         }
 
-        window.onload = fetchWashrooms;
+        async function fetchUpdates() {
+            try {
+                const response = await fetch("http://localhost:5001/updates");
+                const updates = await response.json();
+                displayUpdates(updates);
+            } catch (error) {
+                console.error("❌ Error fetching updates:", error);
+            }
+        }
+
+        function displayUpdates(updates) {
+            const updatesContainer = document.getElementById("updatesContainer");
+            updatesContainer.innerHTML = "";
+
+            updates.forEach(update => {
+                const updateCard = document.createElement("div");
+                updateCard.className = "update-card";
+
+                const avatar = document.createElement("div");
+                avatar.className = "avatar";
+                avatar.textContent = update.building.charAt(0);
+
+                const updateInfo = document.createElement("div");
+                updateInfo.className = "update-info";
+                updateInfo.innerHTML = `
+                    <p>Anonymous updated <strong>${update.building} ${update.floor}</strong></p>
+                    <span class="verified-badge">Verified</span>
+                    <p class="timestamp">${timeSince(new Date(update.timestamp))} ago</p>
+                `;
+
+                updateCard.appendChild(avatar);
+                updateCard.appendChild(updateInfo);
+                updatesContainer.appendChild(updateCard);
+            });
+        }
+
+        function timeSince(date) {
+            const seconds = Math.floor((new Date() - date) / 1000);
+            let interval = seconds / 31536000;
+
+            if (interval > 1) {
+                return Math.floor(interval) + " years";
+            }
+            interval = seconds / 2592000;
+            if (interval > 1) {
+                return Math.floor(interval) + " months";
+            }
+            interval = seconds / 86400;
+            if (interval > 1) {
+                return Math.floor(interval) + " days";
+            }
+            interval = seconds / 3600;
+            if (interval > 1) {
+                return Math.floor(interval) + " hours";
+            }
+            interval = seconds / 60;
+            if (interval > 1) {
+                return Math.floor(interval) + " minutes";
+            }
+            return Math.floor(seconds) + " seconds";
+        }
+
+        window.onload = () => {
+            fetchWashrooms();
+            fetchUpdates();
+            setInterval(fetchUpdates, 600); // Poll every minute
+        };
     </script>
 </body>
 </html>
