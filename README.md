@@ -9,17 +9,41 @@ Students frequently encountered **uncertainty and stress** when trying to access
 - Many students faced **anxiety** in emergency situations.  
 
 ### 💡 The Solution  
-We envisioned **HerMap**, a solution that **empowers students** by providing **real-time information** about product availability,  
-transforming a traditionally **stressful experience into a seamless one**.  
+We envisioned **HerMap**, a solution that **empowers students** by providing **real-time information** about product availability, transforming a traditionally **stressful experience into a seamless one**.  
 
 ---
 
 ## 📚 What We Learned  
 Through **building HerMap**, we gained profound insights into both **technical innovation and social impact**:  
 
-### 🔹 Tech Takeaways  
-- Mastered **Google Maps API integration** for **real-time updates**.  
-- Learned how to **handle concurrent updates** in **MongoDB** while maintaining **data consistency**.  
+## 🔹 Tech Takeaways  
+### 🌐 Frontend (UI, Maps & AI Chatbot)  
+- **🗺️ Google Maps API** – Custom markers & real-time washroom updates  
+- **📱 Responsive UI** – Mobile-friendly with interactive design  
+- **⚡ Streamlit API** – Built AI chatbot for menstrual health support  
+- **📊 Color-Coded Status** – Quick visual indicators for product availability  
+
+### 🖥️ Backend & Database  
+- **🍃 MongoDB Atlas** – Stores real-time washroom updates  
+- **⚙️ Node.js & Express** – RESTful API for data retrieval & updates  
+- **🚀 Mongoose ODM** – Schema-based data validation  
+- **🌐 CORS & Error Handling** – Secure & smooth backend communication  
+
+### ⚡ Real-Time Features  
+- **🟢 Live Data Updates** – Instant status changes for washrooms  
+- **🔔 Anonymous Notifications** – Displays “Someone updated this 1 min ago”  
+- **🔄 WebSockets (Future)** – Planned real-time sync across users  
+
+### 🤖 AI-Powered Chatbot (Phidata + Groq AI)  
+- **💬 Streamlit Chatbot** – Interactive AI-based menstrual health assistant  
+- **🔍 Multi-Agent AI System** – Web Search + PDF Knowledge Retrieval  
+- **🧠 Groq AI (Llama 3.3-70B)** – Answers menstrual health queries  
+- **🔥 Vector Search with PgVector** – Fast, accurate health info retrieval  
+
+### 🔧 DevOps & Deployment  
+- **🔐 Secure API Keys** – Environment variables with `.env`  
+- **🛠️ GitHub for Version Control** – Collaboration & feature branching  
+- **📡 Postman API Testing** – Debugging & endpoint validation
 
 ### 🔹 User-Centered Design  
 - Balanced **functionality and user privacy**, ensuring **sensitive health-related data** is managed with care.  
@@ -72,12 +96,11 @@ HerMap has evolved into a **comprehensive platform** that combines **resource ac
 ✅ **Empowers users** to update availability instantly.  
 ✅ **AI Chatbot** assists with menstrual health concerns.  
 
-### 🔮 Future Enhancements  
-🚀 **Predictive Analytics** – Forecast resource depletion.  
-📱 **Progressive Web App** – Seamless mobile experience.  
-🤖 **Enhanced AI** – More **personalized menstrual health insights**.  
-🛠️ **API Integrations** – Expansion into **other university systems**.  
-🌎 **Scaling** – Bringing **HerMap** to **other educational institutions**.  
+### 📈 Future Enhancements  
+- **📷 Image Uploads for Verification** – Ensure accurate washroom data  
+- **📢 Janitor Alerts** – Notifications when supplies run low  
+- **📍 Geolocation Auto-Population** – Capture user location for updates  
+- **📲 Progressive Web App (PWA)** – Offline & mobile-first access   
 
 ---
 
