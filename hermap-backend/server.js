@@ -6,35 +6,22 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ✅ Middleware to enable CORS (Fixes the CORS error)
-app.use(cors({
-    origin: "*", // Allow all origins (for development) - You can restrict this later
-    methods: "GET,POST,PUT,DELETE",
-    allowedHeaders: "Content-Type,Authorization"
-}));
-
-// ✅ Middleware to parse JSON request body
-app.use(express.json());
+// ✅ Middleware
+app.use(cors()); // Fix CORS issues
+app.use(express.json()); // Allow JSON requests
 
 // ✅ Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-}).then(() => console.log("MongoDB Connected"))
-.catch(err => console.error("MongoDB Connection Error:", err));
+}).then(() => console.log("✅ MongoDB Connected"))
+.catch(err => console.error("❌ MongoDB Connection Error:", err));
 
-// ✅ Verify the connection and list collections
-mongoose.connection.once("open", async () => {
-    console.log("Connected to database:", mongoose.connection.db.databaseName);
-    try {
-        const collections = await mongoose.connection.db.listCollections().toArray();
-        console.log("Available Collections:", collections.map(c => c.name));
-    } catch (error) {
-        console.error("Error listing collections:", error);
-    }
+mongoose.connection.on("open", async () => {
+    console.log("✅ Connected to database:", mongoose.connection.db.databaseName);
 });
 
-// ✅ Define Schema for Washroom Locations
+// ✅ Schema for Washroom Locations
 const WashroomSchema = new mongoose.Schema({
     id: Number,
     name: String,
@@ -57,14 +44,13 @@ const WashroomSchema = new mongoose.Schema({
     ]
 });
 
-// ✅ Create a Model
+// ✅ Create Model
 const Washroom = mongoose.model("Washroom", WashroomSchema, "HerMaps_Reports");
 
-// ✅ API Route to Fetch All Washroom Locations
+// ✅ API Route: Fetch All Washrooms
 app.get("/washrooms", async (req, res) => {
     try {
         const washrooms = await Washroom.find({});
-        console.log("Fetched Washrooms:", washrooms);
         res.json(washrooms);
     } catch (err) {
         console.error("Error fetching washrooms:", err);
@@ -72,7 +58,7 @@ app.get("/washrooms", async (req, res) => {
     }
 });
 
-// ✅ API Route to Fetch a Single Washroom by ID
+// ✅ API Route: Fetch a Single Washroom by ID
 app.get("/washrooms/:id", async (req, res) => {
     try {
         const washroom = await Washroom.findOne({ id: parseInt(req.params.id) });
@@ -83,27 +69,40 @@ app.get("/washrooms/:id", async (req, res) => {
     }
 });
 
-// ✅ API Route to Update Washroom Status (For "Update Status" Button)
-app.put("/washrooms/:id", async (req, res) => {
+// ✅ API Route: Update Washroom Status
+app.patch("/update-status", async (req, res) => {
     try {
-        const { id } = req.params;
-        const updateData = req.body; // Contains pads, tampons, and waterFilter status
+        const { id, floor, vendingMachine, pads, tampons, waterFilter } = req.body;
 
-        // Find the washroom and update its floor details
-        const washroom = await Washroom.findOneAndUpdate(
-            { id: parseInt(id) },
-            { $set: { "floors.$[].status": updateData } }, // Update status for all floors
-            { new: true }
-        );
+        // Find the washroom
+        const washroom = await Washroom.findOne({ id: parseInt(id) });
+        if (!washroom) {
+            return res.status(404).json({ message: "Washroom not found" });
+        }
 
-        if (!washroom) return res.status(404).json({ message: "Washroom not found" });
+        // Find the floor to update
+        const floorIndex = washroom.floors.findIndex(f => f.level === floor);
+        if (floorIndex === -1) {
+            return res.status(404).json({ message: "Floor not found" });
+        }
 
-        res.json({ message: "Washroom status updated successfully", washroom });
+        // Update the floor details
+        washroom.floors[floorIndex].vendingMachine = vendingMachine;
+        washroom.floors[floorIndex].status.pads = pads;
+        washroom.floors[floorIndex].status.tampons = tampons;
+        washroom.floors[floorIndex].status.waterFilter = waterFilter;
+        washroom.floors[floorIndex].status.lastUpdated = new Date().toLocaleString();
+
+        // Save the updated washroom
+        await washroom.save();
+        
+        res.json({ message: "✅ Washroom status updated successfully!" });
+
     } catch (err) {
-        console.error("Error updating washroom:", err);
+        console.error("❌ Error updating washroom:", err);
         res.status(500).json({ error: err.message });
     }
 });
 
-// ✅ Start Server
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// ✅ Start the Server
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

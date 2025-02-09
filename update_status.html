@@ -114,55 +114,58 @@
     </div>
 
     <script>
-        // Get Washroom ID & Floor from URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const washroomId = urlParams.get("id");
-        const floorLevel = urlParams.get("floor");
-        const buildingName = urlParams.get("name");
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get Washroom ID, Floor, and Name from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const washroomId = urlParams.get("id");
+            const floorLevel = urlParams.get("floor") || "Not Provided";
+            const buildingName = decodeURIComponent(urlParams.get("name") || "Not Provided");
 
-        // Set Building & Floor Name, handling missing values
-        document.getElementById("buildingName").innerText = buildingName ? decodeURIComponent(buildingName) : "Not Provided";
-        document.getElementById("floorLevel").innerText = floorLevel ? floorLevel : "Not Provided";
+            // Set Building & Floor Name
+            document.getElementById("buildingName").innerText = buildingName;
+            document.getElementById("floorLevel").innerText = floorLevel;
 
-        // Show/Hide Hygiene Options
-        document.querySelectorAll("input[name='machine']").forEach(input => {
-            input.addEventListener("change", function () {
-                document.getElementById("hygieneOptions").classList.toggle("hidden", this.value === "no");
-            });
-        });
-
-        // Handle Form Submission
-        document.getElementById("submitUpdate").addEventListener("click", async function () {
-            const hasMachine = document.querySelector("input[name='machine']:checked")?.value === "yes";
-            const updateData = {
-                id: washroomId,
-                floor: floorLevel,
-                vendingMachine: hasMachine,
-                status: {
-                    pads: hasMachine ? document.getElementById("pads").value : "N/A",
-                    tampons: hasMachine ? document.getElementById("tampons").value : "N/A",
-                    lastUpdated: new Date().toLocaleString(),
-                    waterFilter: document.querySelector("input[name='waterFilter']:checked").value
-                }
-            };
-
-            try {
-                const response = await fetch(`http://localhost:5000/update-status`, {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(updateData)
+            // Show/Hide Hygiene Options
+            document.querySelectorAll("input[name='machine']").forEach(input => {
+                input.addEventListener("change", function () {
+                    document.getElementById("hygieneOptions").classList.toggle("hidden", this.value === "no");
                 });
+            });
 
-                if (response.ok) {
-                    alert("Washroom status updated successfully!");
-                    window.location.href = "one.html"; // Redirect back to map
-                } else {
-                    alert("Error updating status.");
+            // Handle Form Submission
+            document.getElementById("submitUpdate").addEventListener("click", async function () {
+                const hasMachine = document.querySelector("input[name='machine']:checked")?.value === "yes";
+
+                const updateData = {
+                    id: washroomId,
+                    floor: floorLevel,
+                    vendingMachine: hasMachine,
+                    status: {
+                        pads: hasMachine ? document.getElementById("pads").value : "N/A",
+                        tampons: hasMachine ? document.getElementById("tampons").value : "N/A",
+                        lastUpdated: new Date().toLocaleString(),
+                        waterFilter: document.querySelector("input[name='waterFilter']:checked")?.value || "Unknown"
+                    }
+                };
+
+                try {
+                    const response = await fetch(`http://localhost:5000/update-status`, {
+                        method: "PATCH",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(updateData)
+                    });
+
+                    if (response.ok) {
+                        alert("✅ Washroom status updated successfully!");
+                        window.location.href = "one.html"; // Redirect back to map
+                    } else {
+                        alert("❌ Error updating status.");
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("⚠️ Failed to update status.");
                 }
-            } catch (error) {
-                console.error("Error:", error);
-                alert("Failed to update status.");
-            }
+            });
         });
     </script>
 </body>
