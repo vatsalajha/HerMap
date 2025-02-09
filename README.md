@@ -38,7 +38,8 @@ Through **building HerMap**, we gained profound insights into both **technical i
 - **💬 Streamlit Chatbot** – Interactive AI-based menstrual health assistant  
 - **🔍 Multi-Agent AI System** – Web Search + PDF Knowledge Retrieval  
 - **🧠 Groq AI (Llama 3.3-70B)** – Answers menstrual health queries  
-- **🔥 Vector Search with PgVector** – Fast, accurate health info retrieval  
+- **🔥 Vector Search with PgVector** – Fast, accurate health info retrieval
+- ** Phi-data** - Framework to build AI Agents and workflows.
 
 ### 🔧 DevOps & Deployment  
 - **🔐 Secure API Keys** – Environment variables with `.env`  
