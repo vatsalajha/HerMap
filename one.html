@@ -10,8 +10,21 @@
     </script>
     <style>
         /* Main container styles */
+        body {
+            font-family: Arial, sans-serif;
+            background: #ffe6f2;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #ff99cc;
+            padding: 10px;
+            text-align: center;
+            color: white;
+            font-size: 18px;
+        }
         #map {
-            height: 80vh;
+            height: 70vh;
             width: 100%;
             margin-bottom: 20px;
         }
@@ -60,10 +73,26 @@
             cursor: pointer;
             margin-top: 8px;
         }
+        .agent-section {
+            margin: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
+    <div class="navbar">
+        <span>Washroom Locator Dashboard</span>
+    </div>
     <div id="map"></div>
+
+    <div class="agent-section">
+        <h2>PhiData Agent</h2>
+        <p>Ask any questions related to periods or menstrual hygiene.</p>
+        <!-- Add your PhiData agent integration here -->
+    </div>
 
     <script>
         async function fetchWashrooms() {
